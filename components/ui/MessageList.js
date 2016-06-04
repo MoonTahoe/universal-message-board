@@ -1,10 +1,12 @@
+import MessageInfo from './MessageInfo'
+
 let input
 
 const MessageList = ({ messages=[], onMessage=f=>f }) =>
     <div className='message-list'>
         <p>{messages.length} messages</p>
         <ul>
-            {messages.map((m, i) => <li key={i}>{m.message}</li>)}
+            {messages.map((m, i) => <MessageInfo key={i} {...m} />)}
         </ul>
         <input ref={i=> input = i}
                type="text"
