@@ -1,6 +1,6 @@
 {
   "name": "universal-message-board",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This is a Universal React/Redux message board designed to teach Universal web application design.",
   "main": "index.js",
   "scripts": {

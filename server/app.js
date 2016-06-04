@@ -3,9 +3,18 @@ import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
 import { renderToString } from 'react-dom/server'
+import { Provider } from 'react-redux'
 import { App } from '../components'
+import storeFactory from '../store'
 
 global.React = React
+
+//
+//  TODO: Get initial state data from json
+//
+
+const serverStore = storeFactory(true, true)
+console.log('server store initialized', serverStore.getState())
 
 const page = (html, state) => `
 <!DOCTYPE html>
@@ -35,13 +44,15 @@ module.exports = express()
     .use(express.static(path.join(__dirname, '../dist')))
     .use((req, res) => {
 
-        //const html = renderToString(
-        //    <Provider store={store}>
-        //        <App />
-        //    </Provider>
-        //);
+        const store = storeFactory(true, false, {
+            messages: serverStore.getState().messages
+        });
 
-        const html = renderToString(<App />)
+        const html = renderToString(
+            <Provider store={store}>
+                <App />
+            </Provider>
+        )
 
-        res.status(200).send(page(html, {}))
+        res.status(200).send(page(html, store.getState()))
     })

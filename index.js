@@ -6,12 +6,10 @@ import { App } from './components'
 import '!style!css!sass!postcss-loader!./stylesheets/APP.scss'
 
 window.React = React
-//window.store = storeFactory(true)
+const store = window.store = storeFactory(true, false, window.__INITIAL_STATE__)
 
-//render(
-//    <Provider store={store}>
-//        <App />
-//    </Provider>,
-//    document.getElementById('react-container'))
-
-render(<App />, document.getElementById('react-container'))
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('react-container'))

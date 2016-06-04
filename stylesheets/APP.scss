@@ -1,12 +1,7 @@
 @import "globals";
 
-$light: #FEF;
-$light-grey: #EEE;
-
-html, body {
-  min-height: 100%;
-  height: auto;
-  font-family: Verdana, sans-serif;
+html, body, div#react-container {
+  height: 100%;
 }
 
 h1 {
@@ -16,14 +11,15 @@ h1 {
 body {
 
   @include clear;
-  @include fade-bg($light, $light-grey);
 
-  div.react-container {
-    position: relative;
+  background-color: black;
+  color: green;
 
-    div {
-      display: flex;
-      flex-direction: column;
+  div#react-container {
+
+    pre {
+      margin: 2em;
+      font-size: 1.2em;
     }
 
   }
