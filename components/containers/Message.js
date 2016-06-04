@@ -1,14 +1,15 @@
 import { connect } from 'react-redux'
 import { MessageDetails } from '../ui'
+import { Component } from 'react'
 
-const mapStateToProps = state =>
-    (
-    {}
-    )
+//
+//  TODO: Improve location with find by id
+//
 
-const mapDispatchToProps = dispatch =>
-    (
-    {}
-    )
+const mapStateToProps = (state, props) =>
+    ({
+        message: state.messages.filter(m=>m.id==props.routeParams.id)[0]
+    })
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(MessageDetails)
+
+module.exports = connect(mapStateToProps)(MessageDetails)

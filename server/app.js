@@ -1,4 +1,3 @@
-import React from 'react'
 import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
@@ -6,14 +5,21 @@ import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 import { App } from '../components'
 import storeFactory from '../store'
+import { match, RouterContext } from 'react-router'
+import routes from '../routes'
+import fs from 'fs'
 
-global.React = React
+let messages = []
 
-//
-//  TODO: Get initial state data from json
-//
+if (!fs.existsSync(path.join(__dirname, '../data'))) {
+    fs.mkdirSync(path.join(__dirname, '../data'))
+}
 
-const serverStore = storeFactory(true, true)
+if (fs.existsSync(path.join(__dirname,'../data/messages.json'))) {
+    messages = require('../data/messages')
+}
+
+const serverStore = storeFactory(true, true, { messages })
 console.log('server store initialized', serverStore.getState())
 
 const page = (html, state) => `
@@ -35,6 +41,7 @@ const page = (html, state) => `
 `
 
 module.exports = express()
+    .set('store', serverStore)
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({extended: false}))
     .use((req, res, next) => {
@@ -48,11 +55,21 @@ module.exports = express()
             messages: serverStore.getState().messages
         });
 
-        const html = renderToString(
-            <Provider store={store}>
-                <App />
-            </Provider>
-        )
+        match({routes, location: req.url}, (error, redirectLocation, renderProps) => {
+            if (error) {
+                res.status(500).send(error.message)
+            } else if (redirectLocation) {
+                res.redirect(302, redirectLocation.search)
+            } else if (renderProps) {
+                let html = renderToString(
+                    <Provider store={store}>
+                        <RouterContext {...renderProps} />
+                    </Provider>
+                )
+                res.status(200).send(page(html, store.getState()))
+            } else {
+                res.status(404).send('Not found')
+            }
+        })
 
-        res.status(200).send(page(html, store.getState()))
     })

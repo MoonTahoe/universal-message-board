@@ -1,12 +1,8 @@
-import { SEND_MESSAGE, MESSAGE_RECEIVED } from '../../constants'
+import { MESSAGE } from '../../constants'
 
 const message = (state = {}, action) => {
     switch (action.type) {
-        case SEND_MESSAGE :
-            return {
-                message: action.message
-            }
-        case MESSAGE_RECEIVED :
+        case MESSAGE :
             return {
                 id: action.id,
                 timestamp: action.timestamp,

@@ -1,5 +1,13 @@
-const sendMessage = f => f
+import { MESSAGE, SEND_MESSAGE } from '../constants'
+import { send } from './socket'
 
-const listenForMessages = f => f
+const sendMessage = message => dispatch => {
+    send({
+        type: MESSAGE,
+        message
+    })
+    dispatch({ type: SEND_MESSAGE })
+}
 
-module.exports = {sendMessage, listenForMessages}
+
+module.exports = {sendMessage}

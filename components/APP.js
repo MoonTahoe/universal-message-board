@@ -7,8 +7,9 @@ const asciiArt = `
 88 8  8 88ee 8ee88 8ee88 88  8 88ee8 88ee    88eeeee8 8eee8 88  8 88   8 88ee8
 `
 
-const APP = () => <div>
+const APP = ({ children }) => <div>
     <pre>{asciiArt}</pre>
+    {children}
 </div>
 
 module.exports = APP
