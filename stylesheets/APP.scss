@@ -1,0 +1,35 @@
+@import "globals";
+
+$light: #FEF;
+$light-grey: #EEE;
+
+html, body {
+  min-height: 100%;
+  height: auto;
+  font-family: Verdana, sans-serif;
+}
+
+h1 {
+  @include clear;
+}
+
+body {
+
+  @include clear;
+  @include fade-bg($light, $light-grey);
+
+  div.react-container {
+    position: relative;
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+
+  }
+
+}
+
+input {
+  outline: none;
+}
