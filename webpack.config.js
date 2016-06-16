@@ -1,6 +1,6 @@
 var webpack = require("webpack");
-var path = require("path");
-var autoprefixer = require("autoprefixer");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
     entry: "./index.js",
@@ -22,24 +22,27 @@ module.exports = {
                 }
             },
             {
-                test: /\.scss$/,
-                loader: ['style', 'css?sourceMap', 'sass?sourceMap']
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader!autoprefixer-loader")
             },
             {
-                test: /\.(png|jpg|jpeg|gif|woff|woff2|svg)$/,
-                loader: 'url-loader?limit=8192'
+                test: /\.scss/,
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader!autoprefixer-loader!sass-loader")
             }
         ]
     },
     plugins: [
+        new ExtractTextPlugin("bundle.min.css"),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
             warnings: false,
             mangle: false
+        }),
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.optimize\.css$/g,
+            cssProcessor: require('cssnano'),
+            cssProcessorOptions: { discardComments: {removeAll: true } },
+            canPrint: true
         })
-    ],
-    sassLoader: {
-        includePaths: [path.resolve(__dirname, './stylesheets')]
-    },
-    postcss: [autoprefixer({browsers: ['last 2 versions']})]
+    ]
 };

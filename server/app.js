@@ -19,16 +19,18 @@ if (fs.existsSync(path.join(__dirname,'../data/messages.json'))) {
     messages = require('../data/messages')
 }
 
+const defaultStyles = fs.readFileSync('./dist/bundle.min.css')
 const serverStore = storeFactory(true, true, { messages })
 console.log('server store initialized', serverStore.getState())
 
-const page = (html, state) => `
+const page = (html, state, css=defaultStyles) => `
 <!DOCTYPE html>
 <html>
     <head>
         <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" />
         <meta charset="utf-8">
         <title>Redux Color Wall</title>
+        <style>${css}</style>
     </head>
     <body>
         <div id="react-container">${html}</div>
