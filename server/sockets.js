@@ -17,11 +17,15 @@ const save = (key, file, getState) => action => {
     return action
 }
 
+let handleAction = f => f
+
+const socketAction = action => handleAction(action)
+
 const sockets = (io, store) => {
 
     let nextID = store.getState().messages.map(m=>m.id).reduce((max, id) => (id >= max) ? id : max, 0) + 1
 
-    const handleAction = compose(
+    handleAction = compose(
         save('messages', '../data/messages.json', store.getState),
         sendAll(io),
         dispatch(store),
@@ -42,10 +46,10 @@ const sockets = (io, store) => {
             socket.disconnect()
         })
 
-        socket.on('action', action => handleAction(action))
+        socket.on('action', socketAction)
 
     })
 
 }
 
-module.exports = sockets
+module.exports = {sockets, socketAction}

@@ -2,7 +2,7 @@ import React from 'react'
 import http from 'http'
 import app from './app'
 import socketIO from 'socket.io'
-import sockets from './sockets'
+import { sockets } from './sockets'
 
 global.React = React
 

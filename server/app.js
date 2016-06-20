@@ -6,6 +6,8 @@ import { Provider } from 'react-redux'
 import { App } from '../components'
 import storeFactory from '../store'
 import { match, RouterContext } from 'react-router'
+import { MESSAGE } from '../constants'
+import { socketAction } from './sockets'
 import routes from '../routes'
 import fs from 'fs'
 
@@ -15,15 +17,15 @@ if (!fs.existsSync(path.join(__dirname, '../data'))) {
     fs.mkdirSync(path.join(__dirname, '../data'))
 }
 
-if (fs.existsSync(path.join(__dirname,'../data/messages.json'))) {
+if (fs.existsSync(path.join(__dirname, '../data/messages.json'))) {
     messages = require('../data/messages')
 }
 
 const defaultStyles = fs.readFileSync('./dist/bundle.min.css')
-const serverStore = storeFactory(true, true, { messages })
+const serverStore = storeFactory(true, true, {messages})
 console.log('server store initialized', serverStore.getState())
 
-const page = (html, state, css=defaultStyles) => `
+const page = (html, state, css = defaultStyles) => `
 <!DOCTYPE html>
 <html>
     <head>
@@ -51,6 +53,15 @@ module.exports = express()
         next()
     })
     .use(express.static(path.join(__dirname, '../dist')))
+    .use((req, res, next) => {
+        if (req.method === 'POST' && req.body.newMessage) {
+            socketAction({
+                type: MESSAGE,
+                message: req.body.newMessage
+            })
+        }
+        next();
+    })
     .use((req, res) => {
 
         const store = storeFactory(true, false, {
