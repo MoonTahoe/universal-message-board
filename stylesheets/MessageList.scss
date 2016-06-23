@@ -1,0 +1,47 @@
+@import "globals";
+
+form.message-list {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  p {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  ul {
+    flex-grow: 1;
+    overflow-y: scroll;
+    list-style-type: none;
+    padding: 0;
+    margin: 1em 0;
+    display: flex;
+    flex-direction: column;
+
+    li {
+      margin: 1em 0;
+      font-family: $message-font;
+
+      a {
+        color: #03A9F4;
+        text-decoration: none;
+      }
+
+      span {
+        font-family: verdana, sans-serif;
+        &:first-child {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  input {
+    margin: 1em 0;
+    padding: .2em;
+    font-size: 1.2em;
+  }
+
+}

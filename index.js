@@ -7,6 +7,7 @@ import routes from './routes'
 import { connect } from './actions'
 import './stylesheets/APP.scss'
 import './stylesheets/MessageDetails.scss'
+import './stylesheets/MessageList.scss'
 
 window.React = React
 const store = window.store = storeFactory(true, false, window.__INITIAL_STATE__)

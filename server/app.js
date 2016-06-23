@@ -31,7 +31,7 @@ const page = (html, state, css = defaultStyles) => `
     <head>
         <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" />
         <meta charset="utf-8">
-        <title>Redux Color Wall</title>
+        <title>Universal Message App</title>
         <style>${css}</style>
     </head>
     <body>
