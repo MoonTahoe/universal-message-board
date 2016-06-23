@@ -4,28 +4,35 @@ html, body, div#react-container {
   height: 100%;
 }
 
+body {
+  @include clear;
+  display: flex;
+  background-color: $grey;
+  color: green;
+}
+
+div#react-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  >div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 h1 {
   @include clear;
 }
 
-body {
-
-  @include clear;
-
-  display: flex;
-
-  background-color: black;
-  color: green;
-
-  div#react-container {
-
-    pre {
-      margin: 2em;
-      font-size: 1.2em;
-    }
-
-  }
-
+pre {
+  color: $purps;
+  font-weight: bold;
+  font-size: 1.3em;
+  margin: 2em auto;
 }
 
 input {

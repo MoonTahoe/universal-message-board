@@ -1,3 +1,13 @@
+@import url(https://fonts.googleapis.com/css?family=Knewave|Arizonia);
+
+$grey: #F1F1F1;
+$purps: #7E0DAD;
+$break-tiny: 475px;
+$break-small: 600px;
+
+$message-font: 'Knewave', sans-serif;
+$quote-font: 'Arizonia', sans-serif;
+
 @mixin shadow {
   box-shadow: 3px 3px 8px 1px darken($light-grey, 20%);
 }
